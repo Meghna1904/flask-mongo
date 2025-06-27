@@ -21,7 +21,7 @@ def get_user(user_id):
         if not user:
             return jsonify({"error":"user not found"}),404
         return jsonify(user),200
-    except pymongo.errors.InvalidId:
+    except pymongo.errors.InvalidURI:
         return jsonify({"error":"Invalid user ID"}),400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -50,7 +50,7 @@ def update_user(user_id):
     except ValueError as e:
         return jsonify({"error":str(e)}),500
     
-@user_bp.route("/user_id",methods=["DELETE"])
+@user_bp.route("<user_id>",methods=["DELETE"])
 def delete_user(user_id):
     try:
         deleted_user=user_model.delete(user_id)
